@@ -2,14 +2,16 @@ package handler
 
 import (
 	"fmt"
-	"net/http"
 	"log"
+	"net/http"
 )
 
 // Handler ...
 func Handler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Handling url: ", r.URL.Path)
 	fmt.Fprintf(w, "Url:%s", r.URL.Path)
+
+	log.Println("Handling url: ", r.URL.Path)
+
 	if r.URL.Path == "/api/edit" {
 		editHandler(w, r)
 	}

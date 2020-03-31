@@ -6,8 +6,13 @@ import (
 	"net/http"
 )
 
+
+type IndexHandler struct {
+	Value string
+}
+
 // Handler ...
-func Handler(w http.ResponseWriter, r *http.Request) {
+func (i *IndexHandler) Handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Url:%s", r.URL.Path)
 
 	log.Println("Handling url: ", r.URL.Path)

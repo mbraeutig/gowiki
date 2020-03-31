@@ -1,7 +1,7 @@
 package main
 
-import "api"
+import "handler"
 
 func main() {
-  handler = api.IndexHandler{Value: "Test"}
+  handler = handler.IndexHandler{Value: "Test"}
 }

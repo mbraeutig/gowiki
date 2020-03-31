@@ -3,5 +3,5 @@ package main
 import "handler"
 
 func main() {
-  handler = handler.IndexHandler{Value: "Test"}
+  h = IndexHandler{Value: "Test"}
 }

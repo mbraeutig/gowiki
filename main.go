@@ -1,6 +1,6 @@
 package main
 
-import "handler"
+import "api"
 
 func main() {
   h = IndexHandler{Value: "Test"}

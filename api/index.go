@@ -2,21 +2,11 @@ package handler
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
-
-type IndexHandler struct {
-	Value string
-}
-
 // Handler ...
-func (i *IndexHandler) Handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Url:%s", r.URL.Path)
-
-	log.Println("Handling url: ", r.URL.Path)
-
+func Handler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/api/view/" {
 		viewHandler(w, r)
 	}
@@ -38,4 +28,11 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "saveHandler")
+}
+
+func init() {
+	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
+	p1.save()
+	p2, _ := loadPage("TestPage")
+	fmt.Println(string(p2.Body))
 }

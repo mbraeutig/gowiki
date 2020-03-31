@@ -12,7 +12,7 @@ type IndexHandler struct {
 }
 
 // Handler ...
-func (i IndexHandler) Handler(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, i.Value)
 	fmt.Fprintf(w, "Url:%s", r.URL.Path)
 

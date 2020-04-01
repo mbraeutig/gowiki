@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+func Dummy() {}
+
 type Page struct {
 	Title string
 	Body  []byte

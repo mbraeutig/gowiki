@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-// func Dummy() {}
-
 // Page ...
 type Page struct {
 	Title string
@@ -30,20 +28,24 @@ func loadPage(title string) (*Page, error) {
 
 // Handler ...
 func Handler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/api/view/" {
+	if r.URL.Path == "/api/view/" || r.URL.Path == "/api/view" {
 		viewHandler(w, r)
 	}
-	if r.URL.Path == "/api/edit/" {
+	if r.URL.Path == "/api/edit/" || r.URL.Path == "/api/edit" {
 		editHandler(w, r)
 	}
-	if r.URL.Path == "/api/save/" {
+	if r.URL.Path == "/api/save/" || r.URL.Path == "/api/save" {
 		saveHandler(w, r)
 	}
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/view/"):]
-	p, _ := loadPage(title)
+	p, err := loadPage(title)
+	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
+	}
 	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
 
@@ -51,6 +53,8 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/edit/"):]
 	p, err := loadPage(title)
 	if err != nil {
+		fmt.Fprintf(w, "Error: %s", err)
+		return
 		p = &Page{Title: title}
 	}
 	fmt.Fprintf(w, "<h1>Editing %s</h1>"+

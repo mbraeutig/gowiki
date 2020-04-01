@@ -49,11 +49,13 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, "<h1>Error: %s</h1>", err)
 		fmt.Printf("Save error: %s", err)
+		return
 	}
 
 	p2, err := loadPage("TestPage")
 	if err != nil {
 		fmt.Printf("load error: %s", err)
+		return
 	}
 	fmt.Println(string(p2.Body))
 }

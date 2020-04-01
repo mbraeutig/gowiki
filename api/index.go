@@ -8,6 +8,7 @@ import (
 
 func Dummy() {}
 
+// Page ...
 type Page struct {
 	Title string
 	Body  []byte

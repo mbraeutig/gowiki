@@ -38,7 +38,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		saveHandler(w, r)
 	}
 	if r.URL.Path == "/api/test/" || r.URL.Path == "/api/test" {
-		saveHandler(w, r)
+		testHandler(w, r)
 	}
 }
 

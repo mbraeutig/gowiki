@@ -28,6 +28,19 @@ func loadPage(title string) (*Page, error) {
 
 // Handler ...
 func Handler(w http.ResponseWriter, r *http.Request) {
+
+	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
+	err := p1.save()
+	if err != nil {
+		fmt.Printf("Save error: %s", err)
+	}
+
+	p2, err := loadPage("TestPage")
+	if err != nil {
+		fmt.Printf("load error: %s", err)
+	}
+	fmt.Println(string(p2.Body))
+
 	if r.URL.Path == "/api/view/" || r.URL.Path == "/api/view" {
 		viewHandler(w, r)
 	}
@@ -41,11 +54,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/view/"):]
-	p, err := loadPage(title)
-	if err != nil {
-		fmt.Fprintf(w, "Error: %s", err)
-		return
-	}
+	p, _ := loadPage(title)
 	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
 
@@ -53,8 +62,6 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/edit/"):]
 	p, err := loadPage(title)
 	if err != nil {
-		fmt.Fprintf(w, "Error: %s", err)
-		return
 		p = &Page{Title: title}
 	}
 	fmt.Fprintf(w, "<h1>Editing %s</h1>"+

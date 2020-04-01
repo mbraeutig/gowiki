@@ -1,7 +1,7 @@
 package main
 
-import handler "github.com/mbraeutig/gowiki/api"
+// import handler "github.com/mbraeutig/gowiki/api"
 
-func main() {
-	handler.Dummy()
-}
+// func main() {
+// 	handler.Dummy()
+// }

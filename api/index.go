@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Dummy() {}
+// func Dummy() {}
 
 // Page ...
 type Page struct {

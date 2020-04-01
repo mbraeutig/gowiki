@@ -28,19 +28,6 @@ func loadPage(title string) (*Page, error) {
 
 // Handler ...
 func Handler(w http.ResponseWriter, r *http.Request) {
-
-	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
-	err := p1.save()
-	if err != nil {
-		fmt.Printf("Save error: %s", err)
-	}
-
-	p2, err := loadPage("TestPage")
-	if err != nil {
-		fmt.Printf("load error: %s", err)
-	}
-	fmt.Println(string(p2.Body))
-
 	if r.URL.Path == "/api/view/" || r.URL.Path == "/api/view" {
 		viewHandler(w, r)
 	}
@@ -50,6 +37,25 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/api/save/" || r.URL.Path == "/api/save" {
 		saveHandler(w, r)
 	}
+	if r.URL.Path == "/api/test/" || r.URL.Path == "/api/test" {
+		saveHandler(w, r)
+	}
+}
+
+func testHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1>testHandler</h1>")
+	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
+	err := p1.save()
+	if err != nil {
+		fmt.Fprintf(w, "<h1>Error: %s</h1>", err)
+		fmt.Printf("Save error: %s", err)
+	}
+
+	p2, err := loadPage("TestPage")
+	if err != nil {
+		fmt.Printf("load error: %s", err)
+	}
+	fmt.Println(string(p2.Body))
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {

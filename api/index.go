@@ -2,9 +2,10 @@ package handler
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"os"
 )
 
 // Page ...
@@ -101,14 +102,26 @@ func init() {
 
 // ListFiles lists the files in the current directory.
 func ListFiles(w http.ResponseWriter, r *http.Request) {
-	files, err := ioutil.ReadDir("./")
+	f, err := os.Open("./TestFile.txt")
 	if err != nil {
-		http.Error(w, "Unable to read files", http.StatusInternalServerError)
-		log.Printf("ioutil.ListFiles: %v", err)
+		http.Error(w, fmt.Sprintf("Error reading file: %v", err), http.StatusInternalServerError)
 		return
 	}
-	fmt.Fprintln(w, "Files:")
-	for _, f := range files {
-		fmt.Fprintf(w, "\t%v\n", f.Name())
+	defer f.Close()
+
+	// Write the gopher image to the response writer.
+	if _, err := io.Copy(w, f); err != nil {
+		http.Error(w, fmt.Sprintf("Error writing response: %v", err), http.StatusInternalServerError)
 	}
+
+	// files, err := ioutil.ReadDir("./")
+	// if err != nil {
+	// 	http.Error(w, "Unable to read files", http.StatusInternalServerError)
+	// 	log.Printf("ioutil.ListFiles: %v", err)
+	// 	return
+	// }
+	// fmt.Fprintln(w, "Files:")
+	// for _, f := range files {
+	// 	fmt.Fprintf(w, "\t%v\n", f.Name())
+	// }
 }

@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -38,6 +39,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		saveHandler(w, r)
 	}
 	if r.URL.Path == "/api/test/" || r.URL.Path == "/api/test" {
+		testHandler(w, r)
+	}
+	if r.URL.Path == "/api/ListFiles/" || r.URL.Path == "/api/ListFiles" {
 		testHandler(w, r)
 	}
 }
@@ -93,4 +97,18 @@ func init() {
 	p1.save()
 	// p2, _ := loadPage("TestPage")
 	// fmt.Println(string(p2.Body))
+}
+
+// ListFiles lists the files in the current directory.
+func ListFiles(w http.ResponseWriter, r *http.Request) {
+	files, err := ioutil.ReadDir("./")
+	if err != nil {
+		http.Error(w, "Unable to read files", http.StatusInternalServerError)
+		log.Printf("ioutil.ListFiles: %v", err)
+		return
+	}
+	fmt.Fprintln(w, "Files:")
+	for _, f := range files {
+		fmt.Fprintf(w, "\t%v\n", f.Name())
+	}
 }

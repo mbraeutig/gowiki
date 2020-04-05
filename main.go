@@ -1,7 +1,13 @@
 package main
 
-// import handler "github.com/mbraeutig/gowiki/api"
+import (
+	"log"
+	"net/http"
 
-// func main() {
-// 	handler.Dummy()
-// }
+	handler "github.com/mbraeutig/gowiki/api"
+)
+
+func main() {
+	http.HandleFunc("/", handler.Handler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}

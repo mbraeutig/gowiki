@@ -42,7 +42,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		testHandler(w, r)
 	}
 	if r.URL.Path == "/api/ListFiles/" || r.URL.Path == "/api/ListFiles" {
-		testHandler(w, r)
+		ListFiles(w, r)
 	}
 }
 

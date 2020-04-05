@@ -85,6 +85,10 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 		p.Title, p.Title, p.Body)
 }
 
+func myHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1>myHandler</h1>")
+}
+
 func saveHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/save/"):]
 	body := r.FormValue("body")

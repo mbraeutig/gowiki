@@ -2,7 +2,8 @@
     "name": "gowiki",
     "version": 2,
     "routes": [
-        { "src": "/api/(.*)", "dest": "api/index.go" }
+        { "src": "/api/index", "dest": "api/index.go" },
+        {"src": "/api/haha", "dest": "api/haha.go"}
     ],
     "functions": {
         "api/index.go": {
